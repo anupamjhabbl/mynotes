@@ -1,8 +1,17 @@
+const connectToMongo = require('./db')
 const express = require('express')
-const app = express()
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
+
+connectToMongo();
+
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Thank you lord Ganesha!')
 })
 
-app.listen(3000)
+app.listen(port, () => {
+  console.log(`Example app listening on port http://localhost:${port}`)
+})
+
