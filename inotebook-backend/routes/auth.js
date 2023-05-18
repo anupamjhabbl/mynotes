@@ -3,8 +3,13 @@ const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const router = express.Router();
+const fetchUser = require('../middleware/fetchUser');
 
+const router = express.Router();
+const secret_key = "Anupam loves mustang, supra, GTR, camaro";
+
+
+//Route1 : createUser: no login required
 router.post('/createUser', [
   body('name', "Enter valid name").isLength({ min: 3 }),            // validating 
   body('email', "Invalid email").isEmail(),
@@ -33,7 +38,7 @@ router.post('/createUser', [
       email: req.body.email
     });
 
-    const secret_key = "Anupam loves mustang, supra, GTR, camaro";
+    
     const data = {
       user:{
         id:user.id
@@ -48,5 +53,53 @@ router.post('/createUser', [
     return res.status(500).send("Some error occured");
   }
 });
+
+
+// Route2: do login; no login required
+router.post('/login',[
+  body("email","Enter a valid email").isEmail(),
+  body("password","Password can't be empty").exists()
+], async (req,res) => {
+  try{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {email, password} = req.body;
+    const user = await User.findOne({email:email});
+    if (!user){
+      return res.status(400).json({"error":"Please login with correct credentials"});
+    }
+
+    const passwordCompare = await bcrypt.compare(password, user.password);
+    if (!passwordCompare){
+      return res.status(400).json({"error":"Please login with correct credentails"});
+    }
+
+    const payload = {
+      user:{
+        id:user.id
+      }
+    }
+    const authToken = jwt.sign(payload, secret_key);
+    res.json({authToken});
+  }
+  catch(error){
+    return res.status(500).send("Intenal server error occured");
+  }
+})
+
+// Route3: getting user details: login require
+router.post('/getUser', fetchUser, async (req,res) => {
+  try{
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.status(200).json(user);
+  }
+  catch(error){
+    return res.status(500).send("Some internal error occured");
+  }
+})
 
 module.exports = router;
