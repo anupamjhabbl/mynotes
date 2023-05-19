@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const secret_key = "Anupam loves mustang, supra, GTR, camaro";
 
 const fetchUser = (req, res, next) => {
-    const token = req.header('authToken');
+    const token = req.header('authToken'); 
     if (!token){
         return res.status(401).json({"eroor":"Please authenticate with proper token"});
     }
