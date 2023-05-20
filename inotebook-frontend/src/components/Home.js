@@ -7,7 +7,7 @@ function Home() {
     const [note, setNote] = useState({"title":"", "description":"", "tag":""})
 
     const addNoteHandle = (e) => {
-       e.preventDefault();
+    //    e.preventDefault();
        contextObj.addNote(note.title, note.description, note.tag);
     }
 
@@ -35,7 +35,7 @@ function Home() {
                         <label htmlFor="note_tag" className="form-label">Tag</label>
                         <input type="text" className="form-control" id="note_tag" name="tag" onChange={onChangeMethod}/>
                     </div>
-                    <button className="btn btn-primary" onClick={addNoteHandle}>Submit</button>
+                    <button type="button" className="btn btn-primary" onClick={addNoteHandle}>Add Note</button>
                 </form>
             </div>
             <Notes/>
