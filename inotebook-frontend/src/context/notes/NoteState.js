@@ -22,7 +22,7 @@ const NoteState = ({ children }) => {
   // Adding note
   const addNote = async (title, description, tag) => {
     // backend
-    const response = await fetch(`http://localhost:5000/api/notes/addNote`, {
+    await fetch(`http://localhost:5000/api/notes/addNote`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const NoteState = ({ children }) => {
   // Updating a note
   const editNote = async (id, title, description, tag) => {
     // backend updating
-    const response = await fetch(`http://localhost:5000/api/notes/updateNote/64661217e4ff649c2dc470d9`, {
+    await fetch(`http://localhost:5000/api/notes/updateNote/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -64,24 +64,22 @@ const NoteState = ({ children }) => {
     // const result = response.json(); 
 
     // frontend updating
-    const element = notes;
-    console.log("ye bhi");
+    const element = JSON.parse(JSON.stringify(notes));
     for (let i = 0; i < element.length; i++) {
       if (element[i]._id === id) {
         element[i].title = title;
         element[i].description = description;
         element[i].tag = tag;
-        console.log("ye bhi");
+        break;
       }
     }
     setNotes(element);
-    console.log(element);
   }
 
   // Deleting a note 
   const deleteNote = async (id) => {
     // backend
-    const response = await fetch(`http://localhost:5000/api/notes/deleteNote/${id}`, {
+    await fetch(`http://localhost:5000/api/notes/deleteNote/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

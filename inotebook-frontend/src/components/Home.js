@@ -38,7 +38,7 @@ function Home() {
                     <button type="button" className="btn btn-primary" onClick={addNoteHandle}>Add Note</button>
                 </form>
             </div>
-            <Notes/>
+            <Notes />
         </div>
     )
 }
