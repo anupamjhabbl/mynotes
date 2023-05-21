@@ -17,7 +17,6 @@ const Notes = () => {
     const editNoteHandle = (note) => {
         setEnote(note);
         setDisplayState("d-block");
-        console.log("editnote channd");
     }
 
     const closeModal = () => {
@@ -50,12 +49,13 @@ const Notes = () => {
                                     <div className="mb-3">
                                         <label htmlFor="note_title" className="form-label">Title</label>
                                         <input type="text" className="form-control" id="note_title" name="title"  value={enote.title} aria-describedby="emailHelp"  onChange={onChangeMethod} required />
-                                        <div id="emailHelp" className="form-text">Your title must be unique from other title</div>
+                                        <div id="emailHelp" className="form-text">Your title must be unique from other title and more than 3 characters</div>
                                     </div>
                                     <div className="mb-3">
                                         <div className="form-floating">
                                             <textarea className="form-control" placeholder="Leave a comment here"  value={enote.description} id="note_description" name="description" style={{ "height": "200px" }} onChange={onChangeMethod}></textarea>
                                             <label htmlFor="note_description">Comments</label>
+                                            <div id="emailHelp" className="form-text">Your description must be  more than 5 characters </div>
                                         </div>
                                     </div>
                                     <div className="mb-3">
@@ -67,12 +67,13 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={closeModal}>Close</button>
-                            <button type="button" className="btn btn-primary" onClick={saveChanges}>Save changes</button>
+                            <button type="button" className={`btn btn-primary ${enote.title.length<=3 || enote.description.length<=5 ? "disabled" : ""}`} onClick={saveChanges}>Save changes</button>
                         </div>
                     </div>
                 </div>
             </div>
             <h1 className="my-3">Your Notes</h1>
+            <div className={`${contextObj.notes.length===0 ? "" : "d-none"}`}>No Notes to display</div>
             <div className="container">
                 <div className="row">
                     {

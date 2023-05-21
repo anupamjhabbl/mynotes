@@ -3,6 +3,22 @@ import NoteContext from "./NoteContext";
 
 const NoteState = ({ children }) => {
   const [notes, setNotes] = useState([]);
+  const [alert, setAlert] = useState(false);
+  const [alertKey, setAlertKey] = useState(null);
+  const [message, setMessage] = useState("");
+
+  // setAlertMethod
+  const setAlertMethod = (message) => {
+    if (setAlertKey !== null){
+      clearTimeout(alertKey);
+    }
+    setMessage(message);
+    setAlert(true);
+    const k = setTimeout(()=>{
+      setAlert(false);
+    },2000);
+    setAlertKey(k);
+  }
 
   // fetching notes
   const fetchNotes = async() => {
@@ -16,7 +32,6 @@ const NoteState = ({ children }) => {
 
     const notesTemp = await response.json();
     setNotes(notesTemp.notes);
-    
   }
 
   // Adding note
@@ -43,7 +58,7 @@ const NoteState = ({ children }) => {
       "tag": tag,
     }
     setNotes(notes.concat(obj));
-
+    setAlertMethod("Successfully added note");
   }
 
   // Updating a note
@@ -74,6 +89,7 @@ const NoteState = ({ children }) => {
       }
     }
     setNotes(element);
+    setAlertMethod("successfully edited the note");
   }
 
   // Deleting a note 
@@ -94,10 +110,11 @@ const NoteState = ({ children }) => {
     })
     console.log(newNote);
     setNotes(newNote);
+    setAlertMethod("Successfully deleted the note");
   }
 
   return (
-    <NoteContext.Provider value={{ notes, setNotes, addNote, editNote, deleteNote, fetchNotes }}>
+    <NoteContext.Provider value={{ notes, setNotes, addNote, editNote, deleteNote, fetchNotes, alert, setAlertMethod, message  }}>
       {children}
     </NoteContext.Provider>
   )

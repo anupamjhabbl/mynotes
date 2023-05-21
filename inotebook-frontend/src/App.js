@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
 import NoteState from './context/notes/NoteState';
+import Alert from './components/Alert';
 import {
   BrowserRouter as Router,
   Route,
@@ -13,19 +14,20 @@ import {
 function App() {
   return (
     <>
-    <Router>
+      <Router>
         <div className="App">
-          <Navbar />
           <NoteState>
-          <div className="container my-5">
-            <Routes>
-              <Route exact path="/" element={<Home/>} />
-              <Route exact path="/about" element={<About />} />
-            </Routes>
-          </div>
+            <Navbar />
+            <Alert />
+            <div className="container my-5">
+              <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route exact path="/about" element={<About />} />
+              </Routes>
+            </div>
           </NoteState>
         </div>
-    </Router>
+      </Router>
     </>
   );
 }
