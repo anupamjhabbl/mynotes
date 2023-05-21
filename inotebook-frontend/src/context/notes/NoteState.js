@@ -6,6 +6,7 @@ const NoteState = ({ children }) => {
   const [alert, setAlert] = useState(false);
   const [alertKey, setAlertKey] = useState(null);
   const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
 
   // setAlertMethod
   const setAlertMethod = (message) => {
@@ -114,7 +115,7 @@ const NoteState = ({ children }) => {
   }
 
   return (
-    <NoteContext.Provider value={{ notes, setNotes, addNote, editNote, deleteNote, fetchNotes, alert, setAlertMethod, message  }}>
+    <NoteContext.Provider value={{ notes, setNotes, addNote, editNote, deleteNote, fetchNotes, alert, setAlertMethod, message, success, setSuccess  }}>
       {children}
     </NoteContext.Provider>
   )

@@ -72,8 +72,10 @@ router.post('/login',[
       return res.status(400).json({"error":"Please login with correct credentials"});
     }
 
+    const success = true;
     const passwordCompare = await bcrypt.compare(password, user.password);
     if (!passwordCompare){
+      success = false;
       return res.status(400).json({"error":"Please login with correct credentails"});
     }
 
@@ -83,7 +85,7 @@ router.post('/login',[
       }
     }
     const authToken = jwt.sign(payload, secret_key);
-    res.json({authToken});
+    res.json({success,authToken});
   }
   catch(error){
     return res.status(500).send("Intenal server error occured");

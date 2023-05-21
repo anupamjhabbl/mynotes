@@ -35,6 +35,7 @@ const Notes = () => {
     }
 
     return (
+        contextObj.success && 
         <div className="your_notes my-5">
             {/* <!-- Modal --> */}
             <div className={`modal ${displayState}`} id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
