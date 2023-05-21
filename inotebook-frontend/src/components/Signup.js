@@ -25,8 +25,9 @@ const Signup = () => {
             if (mainResponse.success) {
                 contextObj.setSuccess(true);
                 localStorage.setItem("token", mainResponse.authToken);
-                navigate('/');
                 contextObj.setAlertMethod("Successfully created the user");
+                navigate('/');
+
             }
             else {
                 contextObj.setAlertMethod("Some error ocuured");

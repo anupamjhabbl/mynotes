@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext,  useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from './NoteItem';
 
@@ -9,10 +9,10 @@ const Notes = () => {
     const [displayState, setDisplayState] = useState("d-none");
     const [enote, setEnote] = useState({"id":"", "title":"","description":"","tag":""});
 
-    useEffect(() => {
-        // eslint-disable-next-line
-        contextObj.fetchNotes();
-    })
+    // useEffect(() => {
+    //     // eslint-disable-next-line
+    //     contextObj.fetchNotes();
+    // })
 
     const editNoteHandle = (note) => {
         setEnote(note);

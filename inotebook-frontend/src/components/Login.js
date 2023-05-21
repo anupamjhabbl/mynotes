@@ -25,8 +25,9 @@ const Login = () => {
             if (mainResponse.success) {
                 contextObj.setSuccess(true);
                 localStorage.setItem("token", mainResponse.authToken);
-                navigate('/');
                 contextObj.setAlertMethod("Successfully logged in");
+                navigate('/');
+
             }
             else{
                 contextObj.setAlertMethod("Please fill the correct credentials");

@@ -1,10 +1,12 @@
 import Notes from './Notes';
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
     const contextObj = useContext(NoteContext);
-    const [note, setNote] = useState({"title":"", "description":"", "tag":""})
+    const [note, setNote] = useState({"title":"", "description":"", "tag":""});
+    const navigate = useNavigate();
 
     const addNoteHandle = (e) => {
     //    e.preventDefault();
@@ -15,6 +17,17 @@ function Home() {
     const onChangeMethod = (e) => {
         setNote({...note, [e.target.name]:e.target.value});
     }
+
+    useEffect(()=>{
+        // eslint-disable-next-line
+        if (!localStorage.getItem("token")){
+            navigate('/login');
+        }
+        else{
+            contextObj.fetchNotes();
+        }
+        // eslint-disable-next-line
+    },[])
 
     return (
         <div className="Home container">

@@ -1,10 +1,20 @@
 // import {useEffect} from 'router';
-import {Link, useLocation} from 'react-router-dom';
-
+import { useContext } from 'react';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import NoteContext from '../context/notes/NoteContext';
 
 
 const Navbar = () => {
     let location = useLocation();
+    const contextObj = useContext(NoteContext);
+    const navigate = useNavigate();
+
+    const logout = () => {
+        contextObj.setSuccess(false);
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
@@ -32,10 +42,12 @@ const Navbar = () => {
                             </ul>
                         </li> */}
                     </ul>
-                    <form className="d-flex" role="search">
+                    {!localStorage.getItem('token') ? <form className="d-flex" role="search">
                         <Link className="btn btn-primary mx-2" to="/login"> login </Link>
                         <Link className="btn btn-primary mx-2" to="/signup"> signup </Link>
-                    </form>
+                    </form> : <form className="d-flex" role="search">
+                        <button className="btn btn-primary mx-2" onClick={logout}> logout </button>
+                    </form>}
                 </div>
             </div>
         </nav>
