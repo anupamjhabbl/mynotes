@@ -15,6 +15,7 @@ router.post('/createUser', [
   body('email', "Invalid email").isEmail(),
   body('password', "Password must of length greater than or equal to 8").isLength({ min: 8 })
 ], async (req, res) => {
+  let success = false;
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -44,13 +45,14 @@ router.post('/createUser', [
         id:user.id
       }
     }
+    success = true;
 
     // sending token to user
     const authToken = jwt.sign(data,secret_key);
-    res.json(authToken);
+    res.json({success,authToken});
   }
   catch (error) {
-    return res.status(500).send("Some error occured");
+    return res.status(500).send("Some error occured"+error);
   }
 });
 
