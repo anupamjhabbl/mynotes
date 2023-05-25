@@ -30,7 +30,7 @@ function Home() {
     },[])
 
     return (
-        <div className="Home container">
+        <div className="Home container" style={{"margin-top":"70px"}}> 
             <div className="notes_form">
                 <h1 className="my-3">Add a Note</h1>
                 <form>
